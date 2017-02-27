@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    </head>
+<body>
+
+<div class="container">
+    <form>
+      <fieldset class="form-group">
+        <legend>Porovnajte si platy štátnych zamestnancov po zavedení novej legislatívy</legend>
+        <div class="form-group">
+          <label for="payrollClass">Platová trieda</label>
+          <select class="form-control" id="payrollClass">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+            <option>11</option>
+            <option>12</option>
+            <option>13</option>
+            <option>14</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="yearsExperience">Počet rokov praxe</label>
+          <select class="form-control" id="yearsExperience">
+            <option>0</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+            <option>11</option>
+            <option>12</option>
+            <option>13</option>
+            <option>14</option>
+            <option>15</option>
+            <option>16</option>
+            <option>17</option>
+            <option>18</option>
+            <option>19</option>
+            <option>20</option>
+            <option>21</option>
+            <option>22</option>
+            <option>23</option>
+            <option>24</option>
+            <option>25</option>
+            <option>26</option>
+            <option>27</option>
+            <option>28</option>
+            <option>29</option>
+            <option>30</option>
+            <option>31</option>
+            <option>32</option>
+            <option>33</option>
+            <option>34</option>
+            <option>35</option>
+            <option>36</option>
+            <option>37</option>
+            <option>38</option>
+            <option>39</option>
+            <option>40</option>
+            <option>41</option>
+            <option>42</option>
+            <option>43</option>
+            <option>44</option>
+            <option>45</option>
+            <option>46</option>
+            <option>47</option>
+            <option>48</option>
+            <option>49</option>
+            <option>50</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="payrollLevel">Platový stupeň</label>
+          <select class="form-control" id="payrollLevel" disabled>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+            <option>11</option>
+            <option>12</option>
+            <option>13</option>
+            <option>14</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="scale">Stupnica</label>
+          <select class="form-control" id="scale" aria-describedby="scaleHelpBlock">
+            <option value="basic">Základná</option>
+            <option value="individual">Osobitná</option>
+          </select>
+          <br />
+          <p id="scaleHelpBlock" class="form-text text-muted">
+            Štandardne sú zamestnanci vo verejnej službe odmeňovaní podľa základnej stupnice.<br />
+            Ak chcete vedieť, kto je odmeňovaný podľa osobitnej stupnice, <a href="#">kliknite sem</a>
+          </p>
+        </div>
+        <button type="button" class="btn btn-success" id="compare">Porovnať</button>
+      </fieldset>
+    </form>
+    <div class="row" id="result" style="display:none;">
+      <h2>Výsledok porovnania</h2>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <table>
+            <tr>
+              <td>Súčasný plat</td>
+              <td id="current_result"></td>
+            </tr>
+            <tr>
+              <td>Plat po zavedení legislatívy</td>
+              <td id="future_result"></td>
+            </tr>
+            <tr>
+              <td colspan="2">Po zavedení novej legislatívy by sa plat zamestnancovi zvýšil o <span class="text-success" id="result_diff"></span></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+</div>
+<!-- Libraries -->
+<script src="http://code.jquery.com/jquery-1.9.0rc1.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Data -->
+<script src="./data/current_basic_table.js"></script>
+<script src="./data/current_individual_table.js"></script>
+<script src="./data/table_after_change.js"></script>
+<!-- Logic -->
+<script>
+
+  $( "body" ).on( "click", "#compare", function() {
+    try {
+      calculateDifference();
+    }
+    catch( error ) {
+      console.log( "Error in calculate button click event" );
+      console.log( error );
+    }
+  } );
+
+  $( "body" ).on( "change", "#yearsExperience", function() {
+    try {
+      setPayrollLevel();
+    }
+    catch( error ) {
+      console.log( "Error in experience change event" );
+      console.log( error );
+    }
+  } );
+
+  $( "body" ).on( "change", "#scale", function() {
+    try {
+      setPayrollLevel();
+    }
+    catch( error ) {
+      console.log( "Error in scale change event" );
+      console.log( error );
+    }
+  } );
+
+  function setPayrollLevel() {
+    var payrollClass = getSelectedPayrollClass();
+    var experience = getSelectedExperience();
+    var payrollLevel = basicExperienceLevelMap[experience];
+    if ( !currentIsBasic() ) {
+      payrollLevel = individualExperienceLevelMap[experience];
+    }
+    $( "#payrollLevel" ).val( payrollLevel );
+  }
+
+  function calculateDifference() {
+    try {
+      var selectedPayrollClass = getSelectedPayrollClass();
+      var selectedExperience = getSelectedExperience();
+      var current = calculateCurrent( selectedPayrollClass, selectedExperience );
+      var future  = calculateFuture( selectedPayrollClass, selectedExperience );
+      var diff    = ( future - current ).toFixed( 2 );
+      displayResults(current, future, diff);
+    }
+    catch( error ) {
+      console.log( "Error in calculateDifference" );
+      console.log( error );
+    }
+  }
+
+  function getSelectedPayrollClass() {
+    try {
+      return $("#payrollClass").val();
+    }
+    catch( error ) {
+      console.log( "Error in getSelectedPayrollClass" );
+      console.log( error );
+    }
+  }
+
+  function getSelectedExperience() {
+    try {
+      return $("#yearsExperience").val();
+    }
+    catch( error ) {
+      console.log( "Error in getSelectedExperience" );
+      console.log( error );
+    }
+  }
+
+  function displayResults( current, future, diff ) {
+    try {
+      $( "#current_result" ).text( current );
+      $( "#future_result" ).text( future );
+      $( "#result_diff" ).text( diff + " eur." );
+      $( "#result" ).show( 500 );
+    }
+    catch( error ) {
+      console.log( "Error in displayResults" );
+      console.log( error );
+    }
+  }
+
+  function calculateCurrent( payrollClass, experience ) {
+    try {
+      if ( currentIsBasic() ) {
+        return calculateCurrentBasic( payrollClass, experience );
+      }
+      return calculateCurrentIndividual( payrollClass, experience );
+    }
+    catch( error ) {
+      console.log( "Error in calculateCurrent" );
+      console.log( error );
+    }
+  }
+
+  function currentIsBasic() {
+    try{
+      return $( "#scale" ).val() === "basic";
+    }
+    catch( error ) {
+      console.log( "Error in currentIsBasic" );
+      console.log( error );
+    }
+  }
+
+  function calculateCurrentBasic( payrollClass, experience ) {
+    try{
+      return cur_basic[experience][payrollClass-1];
+    }
+    catch( error ) {
+      console.log( "Error in calculateCurrentBasic" );
+      console.log( error );
+    }
+  }
+
+  function calculateCurrentIndividual( payrollClass, experience ) {
+    try{
+      return cur_individual[experience][payrollClass-1];
+    }
+    catch( error ) {
+      console.log( "Error in calculateCurrentIndividual" );
+      console.log( error );
+    }
+  }
+
+  function calculateFuture( payrollClass, experience ) {
+    try{
+      return after_change[experience][payrollClass-1];
+    }
+    catch( error ) {
+      console.log( "Error in calculateFuture" );
+      console.log( error );
+    }
+  }
+
+</script>
+
+</body>
+</html>
+</html>
