@@ -150,7 +150,7 @@
             </tr>
           </table>
           <br />
-          <div class="fb-like" data-href="https://www.facebook.com/beblavy/" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+          <div class="fb-like" data-href="https://www.facebook.com/beblavy/" data-layout="button" data-action="like" data-size="large" data-show-faces="true" data-share="false"></div>
           <br />
         </div>
       </div>
@@ -159,10 +159,10 @@
         </div>
           <p id="scaleHelpBlock" class="form-text text-muted">
             Štandardne sú zamestnanci vo verejnej službe odmeňovaní podľa základnej stupnice.<br />
-            Ak chcete vedieť, kto je odmeňovaný podľa osobitnej stupnice, <a href="http://mzdy.beblavy.sk/osobitna_stupnica.html">kliknite sem</a>
+            Ak chcete vedieť, kto je odmeňovaný podľa osobitnej stupnice, <a href="http://mzdy.beblavy.sk/osobitna_stupnica.html">kliknite sem.</a>
             <br />
             <br />
-            Kalkulačka sa netýka pedagogických zamestnancov a zdravotníkov
+            Kalkulačka sa netýka pedagogických zamestnancov a zdravotníkov.
           </p>
     </form>
 </div>
@@ -253,9 +253,9 @@
 
   function displayResults( current, future, diff ) {
     try {
-      $( "#current_result" ).html( "&nbsp;" + current + "&euro;" );
-      $( "#future_result" ).html( "&nbsp;" + future + "&euro;" );
-      $( "#result_diff" ).html( "&nbsp;" + diff + "&euro;" );
+      $( "#current_result" ).html( "&nbsp;" + String(current).replace(".", ",") + "&euro;" );
+      $( "#future_result" ).html( "&nbsp;" + String(future).replace(".", ",") + "&euro;" );
+      $( "#result_diff" ).html( "&nbsp;" + String(diff).replace(".", ",") + "&euro;" );
       $( "#result" ).show( 500 );
     }
     catch( error ) {

@@ -18,7 +18,7 @@
 
 <div class="container">
       <br />
-        <h3>Porovnajte si platy verejných zamestnancov po zavedení novej legislatívy </h3>
+        <h3>Porovnajte si tarifné platy verejných zamestnancov po zavedení novej legislatívy </h3>
         <p>
           Poslanci Beblavý, Dubačová, Macháčková, Mihál, Petrík, Zimenová a Žarnay presadzujú nový zákon, ktorý má riešiť nedôstojné  mzdové ohodnotenie zamestnancov verejnej správy a prinútiť štát dodržiavať Zákonník práce. Podľa Zákonníka práce totiž minimálna mzda 435 euro platí len pre nekvalifikovanú prácu. Pre kvalifikovanejšie miesta platia vyššie minimálne mzdy a pre najkvalifikovanejších ľudí je minimálna mzda dvojnásobok, teda 870 eur. Títo ľudia však dnes vo verejnej službe zarábajú oveľa menej.
         </p>
@@ -36,7 +36,7 @@
     <form>
         <div class="panel panel-default" style="margin-left:25px;width: 300px;">
         <div class="panel-heading text-center">
-          <b>Platová kalkulačka</b>
+          <b>Kalkulačka tarifných platov</b>
         </div>
         <div class="panel-body" style="padding:10px">
           <div class="form-group">
@@ -148,11 +148,11 @@
         <div class="panel-body">
           <table style="width: 100%">
             <tr>
-              <td>Súčasný plat</td>
+              <td>Súčasný tarifný plat</td>
               <td id="current_result"></td>
             </tr>
             <tr>
-              <td>Plat po zavedení legislatívy</td>
+              <td>Tarifný plat po zavedení legislatívy</td>
               <td id="future_result"></td>
             </tr>
             <tr>
@@ -160,9 +160,9 @@
               <td><span class="text-success" style="font-weight:bolder;" id="result_diff"></span></td>
             </tr>
           </table>
-          <br />
-          <div class="fb-like" data-href="https://www.facebook.com/beblavy/" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
-          <br />
+            <br />
+            <div class="fb-like" data-href="https://www.facebook.com/beblavy/" data-layout="button" data-action="like" data-size="large" data-show-faces="true" data-share="false"></div>
+            <br />
         </div>
       </div>
     </div>
@@ -170,10 +170,10 @@
         </div>
           <p id="scaleHelpBlock" class="form-text text-muted">
             Štandardne sú zamestnanci vo verejnej službe odmeňovaní podľa základnej stupnice.<br />
-            Ak chcete vedieť, kto je odmeňovaný podľa osobitnej stupnice, <a href="http://mzdy.beblavy.sk/osobitna_stupnica.html">kliknite sem</a>
+            Ak chcete vedieť, kto je odmeňovaný podľa osobitnej stupnice, <a href="http://mzdy.beblavy.sk/osobitna_stupnica.html">kliknite sem.</a>
             <br />
             <br />
-            Kalkulačka sa netýka pedagogických zamestnancov a zdravotníkov
+            Kalkulačka sa netýka pedagogických zamestnancov a zdravotníkov.
           </p>
     </form>
 </div>
@@ -264,9 +264,9 @@
 
   function displayResults( current, future, diff ) {
     try {
-      $( "#current_result" ).html( "&nbsp;" + current + "&euro;" );
-      $( "#future_result" ).html( "&nbsp;" + future + "&euro;" );
-      $( "#result_diff" ).html( "&nbsp;" + diff + "&euro;" );
+      $( "#current_result" ).html( "&nbsp;" + String(current).replace(".", ",") + "&euro;" );
+      $( "#future_result" ).html( "&nbsp;" + String(future).replace(".", ",") + "&euro;" );
+      $( "#result_diff" ).html( "&nbsp;" + String(diff).replace(".", ",") + "&euro;" );
       $( "#result" ).show( 500 );
     }
     catch( error ) {
